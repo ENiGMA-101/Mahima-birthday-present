@@ -1,0 +1,1106 @@
+# MASTER PROMPT: Transform Mahima Birthday Present into a Cinematic, Interactive 3D Birthday Experience
+
+## PROJECT CONTEXT
+
+GitHub repository: https://github.com/ENiGMA-101/Mahima-birthday-present
+
+You are an expert full-stack developer, 3D web developer, UI/UX designer, creative director, and database architect.
+
+Your task is to inspect the existing repository, understand its current architecture, and upgrade it into a polished, cinematic, emotionally engaging, interactive birthday experience for Mahima.
+
+**IMPORTANT: This is an existing project, not a request to build an unrelated website from scratch.**
+
+First inspect the actual source code, components, assets, dependencies, routing, animations, data structures, and current GitHub version. Preserve the features that already work, improve the weak areas, and implement the requirements below in the actual codebase.
+
+Do not merely explain what should be changed. Implement the changes, test them, and document how to run and deploy the completed project.
+
+---
+
+# 1. PRIMARY OBJECTIVE
+
+Transform the website into a personalized birthday journey that feels like an interactive cinematic experience rather than a conventional birthday webpage.
+
+The experience should have:
+
+- Beautiful, realistic-feeling 3D animations.
+- A surprising opening sequence.
+- An interactive birthday cake and candle-blowing moment.
+- An emotional, cinematic friendship story.
+- A continuously moving photo gallery.
+- A dedicated section for memories from last year's birthday.
+- A heartfelt final birthday message.
+- A complete admin dashboard for managing photos, memories, text, and settings.
+- Persistent database storage using Neon PostgreSQL.
+- A complete Bengali and English language system.
+- Excellent mobile, tablet, and desktop responsiveness.
+
+The final product should feel thoughtful, premium, personal, playful, and emotionally memorable.
+
+Avoid generic templates, excessive UI elements, unnecessary clicks, awkward transitions, and artificial-looking decorations.
+
+---
+
+# 2. INSPECT AND PRESERVE THE EXISTING PROJECT
+
+Before modifying code:
+
+1. Inspect the complete repository and its latest available code.
+2. Understand the current application flow and how the scenes connect.
+3. Inspect `src/App.tsx`, `src/config/content.ts`, `src/components/StoryJourney.tsx`, `src/components/Navigation.tsx`, the scene components, the 3D components, the photo manager, and relevant CSS.
+4. Identify existing assets, photos, animation logic, and dependencies.
+5. Check which functionality is incomplete, duplicated, broken, or unnecessarily complicated.
+6. Reuse existing components wherever practical.
+
+The project already uses React, TypeScript, Vite, Three.js, and Tailwind CSS. Preserve the current stack unless a change is genuinely necessary.
+
+Preserve and improve existing functionality, including:
+
+- The interactive 3D gift box.
+- The birthday cake.
+- The candle-blowing interaction.
+- Confetti and sound effects.
+- Background music controls.
+- The story journey.
+- Existing photo memories.
+- Existing visual assets and personalized content.
+
+Do not remove working features just to simplify implementation.
+
+Do not replace actual personal photos with stock images or AI-generated people.
+
+---
+
+# 3. VISUAL DESIGN DIRECTION
+
+Create a premium visual identity with a combination of:
+
+- Cinematic lighting.
+- Deep midnight tones and warm birthday colors.
+- Soft pink, lavender, champagne, cream, and subtle gold accents.
+- Glass-like panels used selectively.
+- Soft shadows and atmospheric depth.
+- Beautiful typography.
+- Smooth camera-like transitions.
+- Carefully controlled particles and light effects.
+- Realistic-looking materials on 3D objects.
+- Elegant micro-interactions.
+
+Use a consistent design system for colors, typography, spacing, buttons, transitions, and responsive behavior.
+
+Do not make every section look like a card.
+
+Avoid excessive gradients, random floating decorations, oversized headings, clutter, and repetitive layouts.
+
+The experience must look intentional and professionally designed, not like an automatically generated template.
+
+Use actual project images wherever available.
+
+---
+
+# 4. OPENING EXPERIENCE: MAKE THE BEGINNING EXCITING
+
+The current beginning should become more cinematic and less boring.
+
+Create a full-screen opening scene featuring the existing 3D gift box.
+
+### Sequence
+
+1. Start with a beautiful atmospheric background.
+2. Introduce subtle particles, lighting, and depth.
+3. Bring the gift box into focus with a smooth 3D entrance.
+4. Show a short, intriguing message.
+5. Let the user open the gift with one obvious primary interaction.
+6. Animate the lid opening naturally.
+7. Release a burst of particles, light, confetti, or other tasteful effects.
+8. Transition directly into the next scene.
+
+Avoid making users click through several introductory screens.
+
+Use one primary action wherever possible.
+
+The scene should be immediately understandable without instructions.
+
+### Animation requirements
+
+- Use the existing Three.js gift model and improve it where necessary.
+- Add smooth easing and natural rotational movement.
+- Avoid sudden jumps, flashing, or unnecessarily long animations.
+- Ensure that the animation performs well on mobile devices.
+- Provide a graceful fallback if WebGL is unavailable.
+
+Support skipping nonessential introductory animations without skipping important birthday content.
+
+---
+
+# 5. BIRTHDAY CAKE EXPERIENCE
+
+Improve the existing 3D cake scene.
+
+### Requirements
+
+- Create an attractive birthday cake with realistic depth and lighting.
+- Use well-designed candles and flame animations.
+- Add subtle ambient particles and atmospheric effects.
+- Keep the cake as the visual focus.
+- Provide one clear instruction to blow out the candles.
+
+### Candle interaction
+
+Support a microphone-based blowing interaction where feasible, with proper permission handling.
+
+If microphone access is denied or unavailable, provide a visible alternative, such as tapping or clicking the candle area.
+
+Do not force microphone access.
+
+When the candles are extinguished:
+
+1. Animate the flames going out.
+2. Add a short smoke or glow effect.
+3. Trigger tasteful confetti.
+4. Play an optional sound effect.
+5. Display a short celebratory message.
+6. Transition smoothly into the story.
+
+Do not require several separate taps to complete the cake interaction.
+
+Respect browser autoplay restrictions and let users control sound and music.
+
+---
+
+# 6. CINEMATIC FRIENDSHIP STORY
+
+Transform the existing story journey into a meaningful visual narrative.
+
+The story should feel like moving through a collection of personal memories, not scrolling through a long, ordinary webpage.
+
+Use a combination of:
+
+- Full-screen or near-full-screen visual scenes.
+- Large personal photographs.
+- Short emotional captions.
+- Elegant transitions.
+- Parallax and depth effects.
+- Gentle zooming and fading.
+- Horizontal memory strips.
+- Carefully selected typography.
+- Optional ambient sound.
+
+### Story structure
+
+Organize the journey into meaningful chapters, such as:
+
+1. The beginning of the friendship.
+2. Special moments together.
+3. Travel and shared adventures.
+4. Funny or unforgettable memories.
+5. Last year's birthday.
+6. What makes the friendship special.
+7. A heartfelt birthday wish.
+
+Use existing project content where available. Make chapter order, titles, and captions editable from the admin dashboard.
+
+Do not invent personal events, dates, places, or memories.
+
+If information is missing, provide an editable placeholder or leave the section unpublished until real content is added.
+
+### Navigation
+
+Provide a subtle progress indicator so the user understands how far they have traveled.
+
+Allow users to move between chapters without forcing them to navigate through unnecessary screens.
+
+Use smooth transitions and maintain the current scene when changing language.
+
+---
+
+# 7. CONTINUOUS RIGHT-TO-LEFT PHOTO MOVEMENT
+
+This is a critical requirement.
+
+The memory photographs must visibly move from **right to left**, not remain in static cards or only animate when scrolling.
+
+Create a beautiful, continuously moving horizontal photo gallery.
+
+### Visual behavior
+
+- Photographs enter from the right.
+- They move smoothly toward the left.
+- New photographs appear from the right as others leave the screen.
+- The sequence loops seamlessly.
+- There should be no visible jump, blank gap, or sudden reset.
+- Use a mixture of image widths and subtle depth effects where appropriate.
+- Keep images recognizable and large enough to appreciate.
+- Use gentle hover effects on desktop.
+- Support touch gestures on mobile.
+
+Create multiple visual rows if appropriate, with different speeds to create depth.
+
+The movement must be genuinely visible during normal use.
+
+### Controls
+
+Provide:
+
+- Pause and resume.
+- Previous and next navigation where useful.
+- Touch swipe support.
+- Optional full-screen image viewing.
+- Reduced-motion support.
+- A way to explore the memories manually.
+
+Do not make automatic movement so fast that users cannot see the photographs.
+
+When a user opens an image, pauses the gallery, or interacts with a control, avoid unexpected movement that interferes with the interaction.
+
+### Technical implementation
+
+Use a reliable animation approach such as CSS transforms or a suitable animation library already installed in the project.
+
+Duplicate the visual sequence only when needed for a seamless loop, and avoid duplicate image entries in the underlying database.
+
+Prevent layout shifts by reserving image dimensions and using appropriate aspect ratios.
+
+Do not implement a static masonry grid as a substitute for the requested moving gallery.
+
+---
+
+# 8. DEDICATED LAST-YEAR BIRTHDAY MEMORY SECTION
+
+Create a separate, visually distinctive section dedicated to Mahima's birthday from last year.
+
+This section is important and should not be hidden inside an unrelated general gallery.
+
+### Design
+
+Use a cinematic birthday-memory presentation featuring:
+
+- A prominent birthday title.
+- Real photographs from last year's birthday.
+- Optional date and location.
+- Short captions.
+- A beautiful image carousel or moving photo strip.
+- An optional full-screen memory viewer.
+- A heartfelt introductory message.
+- A smooth transition into the next story chapter.
+
+Use actual photos and information from the repository if available.
+
+**Never invent birthday photographs or falsely present unrelated photos as last year's birthday.**
+
+If the correct photos are not available, create the section with a clear unpublished or empty state and make it easy to add the real photos through the admin dashboard.
+
+Do not assume a particular birthday date or year. Make the date and year configurable.
+
+The administrator must be able to add, edit, reorder, publish, or remove birthday memories without changing source code.
+
+---
+
+# 9. EMOTIONAL ENDING: MAKE THE FINAL MOMENT MEMORABLE
+
+The ending should feel like a meaningful conclusion to the entire journey.
+
+Avoid an abrupt ending, an empty screen, or a generic birthday message.
+
+Create a cinematic final scene that includes:
+
+- A warm, atmospheric background.
+- A subtle 3D element that connects visually to the opening gift or birthday cake.
+- Tasteful particles, light, or floating decorations.
+- A large, beautifully typeset birthday wish.
+- An optional personal letter.
+- A graceful final animation.
+- A simple replay option.
+
+The final message must support Bengali and English separately.
+
+The administrator must be able to edit the final message, signature, and optional letter from the admin dashboard.
+
+Use a gentle emotional tone without exaggerated animations or excessive text.
+
+Make the replay action restart the experience cleanly without corrupting saved content or accidentally duplicating user data.
+
+---
+
+# 10. STRICT BENGALI AND ENGLISH LANGUAGE RULES
+
+This requirement is mandatory across the entire project.
+
+## Bengali must use Bengali script
+
+Correct:
+
+“তোমার জন্মদিনটা আনন্দ, ভালোবাসা আর সুন্দর স্মৃতিতে ভরে উঠুক।”
+
+Incorrect:
+
+“Tomar birthday ta onek special hok.”
+
+## English must use English
+
+Correct:
+
+“May your birthday be filled with happiness and beautiful memories.”
+
+Do not write English content using Bengali transliteration, or Bengali content using Latin characters.
+
+### Language switcher
+
+Add a polished language selector:
+
+**বাংলা | English**
+
+Requirements:
+
+- Bengali should be the default language.
+- English must be fully supported.
+- Switching language must update all visible text.
+- Do not reload the page when switching languages.
+- Do not reset the current scene or story progress.
+- Preserve the current photo, chapter, and interaction state where practical.
+- Use suitable Bengali typography, including the existing Bengali font setup where appropriate.
+- Ensure Bengali characters render correctly on all screen sizes.
+
+### Content coverage
+
+Apply the language rules to:
+
+- Opening messages.
+- Buttons.
+- Navigation.
+- Cake instructions.
+- Story chapters.
+- Photo titles and captions.
+- Birthday memories.
+- Loading messages.
+- Error messages.
+- Empty states.
+- Admin dashboard labels.
+- Form validation.
+- Confirmation dialogs.
+- Final birthday wishes.
+- Accessibility labels where applicable.
+
+Do not leave romanized Bengali in existing configuration files or fallback messages.
+
+Audit all existing hardcoded content and replace romanized Bengali with proper Bengali-script text.
+
+Keep English copy in English.
+
+### Bilingual content storage
+
+Every editable text field that needs translation should have separate Bengali and English values.
+
+Do not translate personal memories automatically and publish the result without review.
+
+Allow the administrator to edit both language versions independently.
+
+---
+
+# 11. COMPLETE ADMIN DASHBOARD
+
+Build a proper, functional admin dashboard.
+
+The current photo-management functionality is insufficient if it only replaces a few predefined images or stores everything in browser local storage.
+
+The new dashboard must support adding, editing, deleting, organizing, and publishing content without editing source code.
+
+Create a dedicated `/admin` route.
+
+Keep the public birthday experience separate from the administration interface.
+
+## Admin dashboard layout
+
+Create a professional, responsive dashboard with:
+
+- Overview.
+- Photo library.
+- Birthday memories.
+- Story chapters.
+- Friendship memories.
+- Final letter and wishes.
+- General content.
+- Language management.
+- Appearance and animation settings.
+- Preview and publishing controls.
+
+### A. Overview
+
+Display useful statistics such as:
+
+- Total memories.
+- Published memories.
+- Draft memories.
+- Birthday memories.
+- Number of story chapters.
+
+Show useful shortcuts to common actions.
+
+Statistics must come from actual stored data, not hardcoded numbers.
+
+### B. Photo library
+
+Allow the administrator to:
+
+- Upload new photos.
+- Add an image through a URL.
+- Preview images.
+- Edit titles and captions.
+- Set Bengali and English text independently.
+- Add a date.
+- Add a location.
+- Assign a category.
+- Mark a photo as featured.
+- Reorder photos.
+- Publish or unpublish a photo.
+- Delete a photo.
+- Search and filter memories.
+- Preview how photos appear on the public site.
+
+Validate image types and file sizes.
+
+Use accessible confirmation dialogs for destructive actions.
+
+Do not silently delete records when the administrator only wants to remove a photo from the public display.
+
+### C. Categories
+
+Support configurable categories, including:
+
+- General memories.
+- Last year's birthday.
+- Sreemangal trip.
+- Friendship story.
+- Special moments.
+- Featured memories.
+
+Preserve any existing category information that is still relevant.
+
+Allow the administrator to assign categories and change display order.
+
+### D. Story editor
+
+Allow the administrator to:
+
+- Add a new story chapter.
+- Edit chapter titles.
+- Edit Bengali and English descriptions.
+- Assign photographs.
+- Reorder chapters.
+- Save drafts.
+- Publish or unpublish chapters.
+- Preview the chapter in the public experience.
+
+### E. Birthday memory manager
+
+Provide a dedicated interface for last year's birthday memories.
+
+Allow the administrator to add multiple photos, arrange them in the desired order, set dates and captions, and publish the complete section.
+
+Do not require a code deployment to update the birthday gallery.
+
+### F. Final letter and birthday wishes
+
+Provide editable fields for:
+
+- Main birthday greeting.
+- Bengali greeting.
+- English greeting.
+- Personal letter in both languages.
+- Signature.
+- Optional date.
+- Optional closing message.
+
+Support drafts and previewing.
+
+### G. Appearance and animation settings
+
+Allow the administrator to configure reasonable settings such as:
+
+- Theme colors.
+- Background style.
+- Photo movement speed.
+- Whether automatic gallery movement is enabled.
+- Whether sound effects are enabled by default.
+- Birthday section visibility.
+- Optional effects and animations.
+
+Provide safe defaults and respect reduced-motion preferences.
+
+### H. Saving and publishing
+
+The admin interface must provide:
+
+- Clear saving states.
+- Success and error feedback.
+- Unsaved-change warnings.
+- Confirmation before deletion.
+- A preview mode.
+- A publishing action.
+- Reliable persistence after refreshing the browser.
+
+All changes must be saved through the backend to Neon PostgreSQL.
+
+---
+
+# 12. DATABASE: USE NEON POSTGRESQL, NOT SUPABASE
+
+Use **Neon Serverless PostgreSQL** as the application's database.
+
+Do not use Supabase.
+
+Do not add Supabase authentication, Supabase database clients, or Supabase Storage dependencies.
+
+Neon will store the structured application data, including memory records, captions, categories, story chapters, and site settings.
+
+Neon is not the image-file storage service. Store the actual uploaded image files in a dedicated image-storage service and save their URLs and metadata in Neon.
+
+## Recommended architecture
+
+Use the existing React + TypeScript + Vite frontend.
+
+Add a secure server-side backend, preferably Node.js with Express and TypeScript, unless the repository already contains a suitable backend.
+
+Use the official Neon-compatible PostgreSQL driver, such as `@neondatabase/serverless`, or another appropriate PostgreSQL driver compatible with the deployment environment.
+
+All database operations must occur on the server.
+
+The frontend must communicate with the backend using authenticated API requests.
+
+Never connect directly to Neon from browser-side React components.
+
+## Database schema
+
+Create version-controlled SQL migration files.
+
+Adapt the schema to existing data structures rather than creating unnecessary duplicate tables.
+
+### Table: `admin_users`
+
+Fields:
+
+- `id`: primary key.
+- `email`: unique email address.
+- `password_hash`: securely hashed password.
+- `created_at`: creation timestamp.
+
+### Table: `memories`
+
+Fields:
+
+- `id`: primary key.
+- `title_bn`: Bengali title.
+- `title_en`: English title.
+- `caption_bn`: Bengali caption.
+- `caption_en`: English caption.
+- `image_url`: stored image URL.
+- `category`: memory category.
+- `location`: optional location.
+- `memory_date`: optional memory date.
+- `is_featured`: featured status.
+- `display_order`: sorting order.
+- `is_published`: public visibility.
+- `created_at`: creation timestamp.
+- `updated_at`: last update timestamp.
+
+### Table: `story_chapters`
+
+Fields:
+
+- `id`: primary key.
+- `title_bn`.
+- `title_en`.
+- `description_bn`.
+- `description_en`.
+- `display_order`.
+- `is_published`.
+- `created_at`.
+- `updated_at`.
+
+If a chapter can contain multiple memories, implement an appropriate relationship table rather than storing multiple unrelated IDs in one text field.
+
+### Table: `site_content`
+
+Fields:
+
+- `id`: primary key.
+- `content_key`: unique content identifier.
+- `value_bn`: Bengali content.
+- `value_en`: English content.
+- `updated_at`.
+
+### Table: `site_settings`
+
+Fields:
+
+- `id`: primary key.
+- `setting_key`: unique setting identifier.
+- `setting_value`: appropriately typed or validated configuration value.
+- `updated_at`.
+
+Add any additional tables needed for image metadata, session management, or relationships only when justified by the architecture.
+
+Use appropriate constraints, indexes, foreign keys, and timestamps.
+
+Create a safe initial setup or seed process for the administrator and default site content.
+
+Do not commit real administrator passwords or secrets.
+
+---
+
+# 13. IMAGE STORAGE AND UPLOADS
+
+Use a dedicated image-storage provider that supports server-side uploads and permanent image URLs.
+
+Choose a practical provider compatible with the project and document the setup. If an image-storage provider is not configured, allow the administrator to enter existing hosted image URLs.
+
+### Requirements
+
+- Validate image type and file size.
+- Store files outside the Neon database.
+- Store the resulting image URL and relevant metadata in Neon.
+- Support image preview before publishing.
+- Handle upload failures gracefully.
+- Prevent unauthorized uploads.
+- Avoid creating duplicate database records when an upload is retried.
+- Use stable image URLs.
+- Handle deleted or unavailable images gracefully.
+
+If using an image-storage service, document its environment variables and configuration.
+
+Do not pretend that uploads are persistent if they are only stored in browser memory or `localStorage`.
+
+---
+
+# 14. AUTHENTICATION AND SECURITY
+
+The admin dashboard must be protected by real authentication.
+
+The existing `?admin=true` query parameter and keyboard shortcut must not grant administrator privileges.
+
+You may keep a development shortcut for opening the login screen, but it must never bypass authentication or authorization.
+
+Implement:
+
+- An admin login screen.
+- Secure password hashing.
+- Server-side session management.
+- Secure session cookies.
+- Logout.
+- Protection against unauthorized API requests.
+- Server-side validation of all incoming data.
+- Parameterized SQL queries.
+- Rate limiting for login attempts.
+- Appropriate CSRF protection when required by the chosen authentication architecture.
+- Safe handling of uploaded files.
+- Appropriate security headers.
+- Restricted administrator account creation.
+
+Use established authentication libraries and security practices rather than implementing cryptographic primitives yourself.
+
+Do not expose administrator passwords, database credentials, session secrets, or privileged API keys to the frontend.
+
+Do not use a client-side `isAdmin` Boolean as the security boundary.
+
+All protected API endpoints must verify the authenticated administrator on the server.
+
+### Environment variables
+
+Provide a `.env.example` with placeholders such as:
+
+`DATABASE_URL=your_neon_connection_string`
+
+`SESSION_SECRET=replace_with_a_long_random_secret`
+
+`ADMIN_EMAIL=admin@example.com`
+
+`IMAGE_STORAGE_API_KEY=your_image_storage_key`
+
+`IMAGE_STORAGE_ACCOUNT=your_storage_account`
+
+Adapt the names to the actual implementation.
+
+Never put secret values in frontend variables prefixed with `VITE_`.
+
+Do not commit `.env` files containing actual secrets.
+
+---
+
+# 15. API IMPLEMENTATION
+
+Implement and document the necessary backend endpoints.
+
+Suggested endpoints include:
+
+### Public endpoints
+
+- `GET /api/content`: fetch published bilingual site content.
+- `GET /api/memories`: fetch published memories with optional category filtering.
+- `GET /api/story-chapters`: fetch published chapters in display order.
+- `GET /api/settings`: fetch safe public settings.
+
+### Authentication endpoints
+
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `GET /api/auth/me`
+
+### Admin memory endpoints
+
+- `GET /api/admin/memories`
+- `POST /api/admin/memories`
+- `PATCH /api/admin/memories/:id`
+- `DELETE /api/admin/memories/:id`
+
+### Admin chapter endpoints
+
+- `POST /api/admin/story-chapters`
+- `PATCH /api/admin/story-chapters/:id`
+- `DELETE /api/admin/story-chapters/:id`
+
+### Admin content and settings endpoints
+
+- `PATCH /api/admin/content/:key`
+- `PATCH /api/admin/settings/:key`
+
+### Image upload
+
+- `POST /api/admin/uploads`
+
+These are suggested routes, not a requirement to create redundant APIs. Adjust the endpoint structure to match the existing codebase.
+
+All admin endpoints must enforce authentication and authorization.
+
+Public endpoints must return only published content and safe settings.
+
+Implement proper error responses, validation, and appropriate HTTP status codes.
+
+Avoid returning stack traces or sensitive database details to the browser.
+
+---
+
+# 16. DATABASE CONNECTION AND DEPLOYMENT
+
+Use Neon as the hosted PostgreSQL database.
+
+### Local development
+
+Provide clear instructions for:
+
+1. Creating a Neon project.
+2. Obtaining the PostgreSQL connection string.
+3. Configuring the backend environment.
+4. Running SQL migrations.
+5. Initializing the administrator account securely.
+6. Starting the backend.
+7. Starting the Vite frontend.
+8. Configuring image storage.
+9. Testing the complete application.
+
+### Deployment
+
+Make the application deployable using an appropriate frontend hosting platform and a backend hosting platform that supports the selected server architecture.
+
+If the existing frontend is deployed on Vercel, preserve that workflow where practical.
+
+Configure the backend and Neon connection securely.
+
+Set production environment variables through the hosting provider's environment settings.
+
+Ensure that frontend API requests point to the deployed backend in production and the local backend in development.
+
+Configure CORS, cookies, and allowed origins correctly for the chosen deployment architecture.
+
+Do not assume that a Vite frontend can run Express API endpoints unless the deployment architecture actually supports them.
+
+Document the exact deployment steps for the chosen solution.
+
+---
+
+# 17. CONTENT MANAGEMENT AND PERSISTENCE
+
+Remove the current limitation where the main content can only be updated by editing source files or replacing a few predefined photos.
+
+Use Neon-backed content for all administrator-editable memories, story chapters, and site text.
+
+Requirements:
+
+- Adding a memory saves it to Neon.
+- Editing a memory updates its existing record.
+- Deleting a memory removes or archives it according to the documented policy.
+- Reordering memories persists the new order.
+- Publishing and unpublishing persist.
+- Refreshing the website does not lose saved content.
+- Opening the site on another device shows the same published content.
+- Language switching does not overwrite saved content.
+- Existing default content is migrated or seeded safely without duplicating records on every restart.
+
+Use stable database IDs.
+
+Avoid relying on array indexes as permanent record identifiers.
+
+If the database or API is unavailable, display a clear error or retry state. Do not silently claim that an unsaved change was saved.
+
+---
+
+# 18. USER EXPERIENCE AND FUNCTIONALITY
+
+Make the website easier and more enjoyable to use.
+
+### Reduce unnecessary taps
+
+- Combine related interactions.
+- Keep one clear primary action per scene.
+- Avoid repetitive confirmation screens.
+- Automatically transition after important completed animations when appropriate.
+- Let users replay or revisit memories.
+- Do not automatically advance while the user is reading a long caption or interacting with an image.
+
+### Music and sound
+
+- Preserve existing music and sound controls.
+- Make sound optional.
+- Respect browser autoplay restrictions.
+- Remember reasonable user preferences without treating browser storage as the primary database.
+- Provide a mute control.
+
+### Loading and error states
+
+Implement:
+
+- A polished initial loading state.
+- Image loading placeholders.
+- Graceful image failure states.
+- API error handling.
+- A useful empty state for unpublished birthday memories.
+- A retry mechanism where appropriate.
+
+### Accessibility
+
+- Keyboard-accessible controls.
+- Visible focus indicators.
+- Semantic HTML.
+- Accessible image descriptions.
+- Sufficient contrast.
+- Reduced-motion support.
+- Proper labels for form fields.
+- Dialog focus management.
+- No critical content available only through hover.
+
+---
+
+# 19. PERFORMANCE AND RESPONSIVENESS
+
+The application must work well on:
+
+- Desktop computers.
+- Laptops.
+- Tablets.
+- Android phones.
+- iPhones.
+
+Requirements:
+
+- Optimize large photographs.
+- Lazy-load images outside the initial viewport.
+- Avoid loading every full-size image at startup.
+- Reserve image dimensions to reduce layout shifts.
+- Avoid unnecessary React re-renders.
+- Clean up Three.js resources, animation frames, event listeners, and audio resources.
+- Prevent memory leaks.
+- Use responsive image sizes.
+- Keep 3D effects efficient on mobile.
+- Provide fallbacks for reduced-motion settings and limited graphics performance.
+- Ensure that the moving gallery does not cause horizontal overflow across the entire page.
+
+Do not sacrifice usability for visual effects.
+
+---
+
+# 20. CODE QUALITY
+
+Follow professional development practices.
+
+- Use TypeScript types for memories, story chapters, settings, and API responses.
+- Reuse components instead of duplicating large blocks of UI.
+- Separate frontend components, server logic, database access, authentication, and validation.
+- Use environment variables correctly.
+- Add appropriate database migrations.
+- Avoid hardcoded credentials.
+- Remove obsolete code only after confirming that it is no longer needed.
+- Keep existing working behavior unless it is intentionally improved.
+- Use stable IDs and consistent error handling.
+- Keep the code understandable and maintainable.
+
+Do not leave unfinished placeholder functions, fake API implementations, or buttons that do nothing.
+
+Do not claim that a feature is implemented if it is only represented by a mockup.
+
+---
+
+# 21. README AND PROJECT DOCUMENTATION
+
+Update the project's README with:
+
+1. Project overview.
+2. Main features.
+3. Technology stack.
+4. Architecture overview.
+5. Project directory structure.
+6. Local development setup.
+7. Neon PostgreSQL setup.
+8. Database migrations and initialization.
+9. Environment variables.
+10. Administrator account setup.
+11. Image-storage configuration.
+12. Frontend and backend deployment.
+13. How to add, edit, delete, and publish memories.
+14. How bilingual content works.
+15. How to troubleshoot common problems.
+
+Include a `.env.example` with placeholders only.
+
+Document any required database migration commands and build scripts.
+
+Do not publish secrets or actual credentials in the README.
+
+---
+
+# 22. TESTING REQUIREMENTS
+
+Test the actual implementation, not just the appearance.
+
+### Birthday experience
+
+- Gift animation works.
+- The gift can be opened.
+- The cake renders correctly.
+- Candle-blowing interaction works or provides its fallback.
+- Confetti and sound controls work.
+- Story chapters transition correctly.
+- The final scene appears correctly.
+- Replay starts a clean new experience.
+
+### Photo gallery
+
+- Images visibly move from right to left.
+- The gallery loops seamlessly.
+- Pause and resume work.
+- Touch gestures work on mobile.
+- Full-screen viewing works.
+- Reduced-motion preferences are respected.
+- Missing images do not break the layout.
+
+### Last-year birthday memories
+
+- The section appears when published.
+- It uses actual configured photos.
+- The administrator can add, edit, reorder, publish, unpublish, and delete memories.
+- The empty state works when no birthday memories have been added.
+
+### Languages
+
+- Bengali is displayed in Bengali script.
+- English is displayed in English.
+- No romanized Bengali remains in user-facing content.
+- Language switching works without reloading the page.
+- The current scene and story position are preserved.
+
+### Admin and database
+
+- Unauthenticated users cannot access protected administration APIs.
+- Valid administrators can log in and log out.
+- Memory creation works.
+- Memory editing works.
+- Memory deletion works.
+- Ordering persists.
+- Publishing status persists.
+- Story chapter editing works.
+- Site content editing works.
+- Database persistence survives a page refresh and access from another device.
+- Failed requests display appropriate feedback.
+- Secrets are not exposed in the frontend.
+
+### Build
+
+Run the appropriate commands for the actual project, including:
+
+- Dependency installation.
+- TypeScript checks.
+- Linting if configured.
+- Production frontend build.
+- Backend build or type checking.
+- Relevant tests.
+
+Fix errors introduced by your changes.
+
+Do not hide errors by disabling TypeScript checks or weakening security.
+
+---
+
+# 23. ACCEPTANCE CRITERIA
+
+The project is complete only when all of the following are true:
+
+1. The existing birthday experience remains functional.
+2. The opening and ending feel significantly more cinematic.
+3. The 3D gift and cake interactions work.
+4. The photographs visibly move continuously from right to left.
+5. A dedicated last-year birthday memory section exists.
+6. Bengali content uses Bengali script; English content uses English.
+7. No romanized Bengali remains in visible content.
+8. The language switcher works without reloading the experience.
+9. The `/admin` dashboard is fully functional and protected by real authentication.
+10. Memories can be added, edited, deleted, reordered, and published without code changes.
+11. The database is Neon PostgreSQL, not Supabase.
+12. Image uploads use a configured storage service, or the admin can use hosted image URLs.
+13. Saved content persists across refreshes and devices.
+14. The application works on desktop and mobile.
+15. Environment variables and database credentials are handled securely.
+16. The README contains clear setup and deployment instructions.
+17. The frontend and backend build successfully.
+18. No important button is decorative or nonfunctional.
+19. No personal photographs or events have been fabricated.
+20. No feature is falsely described as complete when it has not been implemented or configured.
+
+---
+
+# 24. EXECUTION INSTRUCTIONS
+
+Work through the project in this order:
+
+**Phase 1 — Audit**
+Inspect the existing repository, identify the current architecture, and determine the exact files that need changes.
+
+**Phase 2 — Architecture**
+Define the frontend/backend architecture, Neon schema, image-storage strategy, and authentication approach.
+
+**Phase 3 — Database and backend**
+Implement migrations, database access, authentication, API endpoints, validation, and upload handling.
+
+**Phase 4 — Admin dashboard**
+Implement persistent memory management, bilingual content editing, story editing, settings, preview, and publishing.
+
+**Phase 5 — Birthday experience**
+Upgrade the opening, cake, story journey, moving gallery, last-year birthday memories, and ending.
+
+**Phase 6 — Language and accessibility**
+Audit every user-facing string, remove romanized Bengali, complete both language versions, and implement accessibility and reduced-motion support.
+
+**Phase 7 — Integration**
+Connect the frontend to the backend and Neon. Remove obsolete local-only editing behavior where it conflicts with the new persistent system.
+
+**Phase 8 — Testing**
+Run the relevant checks, fix implementation errors, and verify the complete user journey and admin workflows.
+
+**Phase 9 — Documentation**
+Update the README, environment example, database migration instructions, and deployment guide.
+
+Do not stop after writing a plan. Implement the changes in the available project files.
+
+If access to GitHub or a required service is unavailable, clearly identify the limitation and provide the exact files or commands needed to continue. Do not claim to have modified or deployed the repository unless those actions actually succeeded.
+
+## FINAL GOAL
+
+Deliver a polished, cinematic, personalized birthday website that makes Mahima's birthday memories feel special, with a smooth 3D experience, a continuously moving right-to-left photo gallery, a heartfelt ending, a strict Bengali/English language system, and a secure admin dashboard powered by Neon PostgreSQL.
+
+The website should be easy to maintain: **after the initial implementation, I should be able to manage photos, memories, captions, birthday wishes, and story content from the admin dashboard without editing code.**

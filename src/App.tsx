@@ -3,13 +3,17 @@ import { Navigation } from './components/Navigation';
 import { Scene1Mystery } from './components/scenes/Scene1Mystery';
 import { Scene2Cake } from './components/scenes/Scene2Cake';
 import { StoryJourney } from './components/StoryJourney';
-import { PhotoManagerModal } from './components/PhotoManagerModal';
+import { AdminLogin } from './components/admin/AdminLogin';
+import { AdminDashboard } from './components/admin/AdminDashboard';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { DEFAULT_PHOTOS, PhotoMemory } from './config/content';
 import { audioManager } from './utils/audio';
 
 export type ExperiencePhase = 'mystery' | 'cake' | 'journey';
 
-export const App: React.FC = () => {
+const MainExperience: React.FC = () => {
+  const { lang } = useLanguage();
+
   // Experience Phase: 'mystery' -> 'cake' -> 'journey'
   const [phase, setPhase] = useState<ExperiencePhase>(() => {
     try {
@@ -17,6 +21,24 @@ export const App: React.FC = () => {
       return (saved as ExperiencePhase) || 'mystery';
     } catch {
       return 'mystery';
+    }
+  });
+
+  // Admin routing state
+  const [isAdminRoute, setIsAdminRoute] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    return (
+      window.location.pathname.startsWith('/admin') ||
+      window.location.hash === '#admin' ||
+      window.location.search.includes('admin=true')
+    );
+  });
+
+  const [adminToken, setAdminToken] = useState<string | null>(() => {
+    try {
+      return localStorage.getItem('admin_token');
+    } catch {
+      return null;
     }
   });
 
@@ -30,27 +52,9 @@ export const App: React.FC = () => {
     }
   });
 
-  // Audio & Admin States
+  // Audio States
   const [isPlayingMusic, setIsPlayingMusic] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
-  const [isPhotoManagerOpen, setIsPhotoManagerOpen] = useState<boolean>(false);
-
-  // Admin Mode check (via ?admin=true query parameter or Alt+P shortcut)
-  const [isAdmin, setIsAdmin] = useState<boolean>(() => {
-    return typeof window !== 'undefined' && window.location.search.includes('admin=true');
-  });
-
-  // Keyboard shortcut Alt+P to toggle admin photo manager
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.altKey && (e.key === 'p' || e.key === 'P')) {
-        setIsAdmin(true);
-        setIsPhotoManagerOpen((prev) => !prev);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
 
   // Sync phase to localStorage
   useEffect(() => {
@@ -61,14 +65,18 @@ export const App: React.FC = () => {
     }
   }, [phase]);
 
-  // Sync photos to localStorage
+  // Handle URL hash changes for #admin
   useEffect(() => {
-    try {
-      localStorage.setItem('mahima_custom_photos', JSON.stringify(photos));
-    } catch (e) {
-      console.warn('Storage error', e);
-    }
-  }, [photos]);
+    const handleHashChange = () => {
+      setIsAdminRoute(
+        window.location.pathname.startsWith('/admin') ||
+        window.location.hash === '#admin' ||
+        window.location.search.includes('admin=true')
+      );
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const handleStartCake = () => {
     setPhase('cake');
@@ -104,31 +112,59 @@ export const App: React.FC = () => {
     }
   };
 
-  const handleUpdatePhotoSrc = (id: string, newSrc: string) => {
-    setPhotos((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, src: newSrc } : p))
-    );
+  const handleOpenAdmin = () => {
+    window.location.hash = '#admin';
+    setIsAdminRoute(true);
   };
 
-  const handleResetPhotos = () => {
-    setPhotos(DEFAULT_PHOTOS);
+  const handleBackToSite = () => {
+    window.location.hash = '';
+    setIsAdminRoute(false);
+  };
+
+  const handleLoginSuccess = (token: string) => {
+    setAdminToken(token);
+  };
+
+  const handleLogout = async () => {
     try {
-      localStorage.removeItem('mahima_custom_photos');
+      await fetch('/api/auth/logout', { method: 'POST' });
     } catch (e) {
-      console.warn('Storage error', e);
+      // ignore
     }
+    localStorage.removeItem('admin_token');
+    setAdminToken(null);
   };
 
+  // If in admin view:
+  if (isAdminRoute) {
+    if (adminToken) {
+      return (
+        <AdminDashboard
+          token={adminToken}
+          onLogout={handleLogout}
+          onBackToSite={handleBackToSite}
+        />
+      );
+    }
+    return (
+      <AdminLogin
+        onLoginSuccess={handleLoginSuccess}
+        onBackToSite={handleBackToSite}
+      />
+    );
+  }
+
+  // Public Birthday Experience
   return (
     <div className="min-h-screen bg-ivory text-warmCharcoal flex flex-col font-sans selection:bg-dustyRose selection:text-white">
-      {/* Minimal Floating Navigation (No chapter buttons or step counters) */}
+      {/* Minimal Floating Navigation */}
       <Navigation
         isPlayingMusic={isPlayingMusic}
         onToggleMusic={handleToggleMusic}
         isMuted={isMuted}
         onToggleMute={handleToggleMute}
-        isAdmin={isAdmin}
-        onOpenPhotoManager={() => setIsPhotoManagerOpen(true)}
+        onOpenAdmin={handleOpenAdmin}
       />
 
       {/* Main Experience Layout */}
@@ -146,32 +182,30 @@ export const App: React.FC = () => {
         )}
       </main>
 
-      {/* Discreet Footer */}
+      {/* Discreet Editorial Footer */}
       <footer className="py-8 border-t border-champagne/40 bg-ivory/60 text-center text-xs text-mutedMauve">
         <p className="font-serif">
-          Crafted with memories by Batparss for Mahima • 2026
+          {lang === 'bn'
+            ? 'মহিমার জন্য বাটপাড়স গ্যাংয়ের আন্তরিক পরিবেশনা • ২০২৬'
+            : 'Crafted with genuine memories by Batparss for Mahima • 2026'}
         </p>
         <button
-          onClick={() => {
-            setIsAdmin(true);
-            setIsPhotoManagerOpen(true);
-          }}
-          className="text-[10px] text-mutedMauve/40 hover:text-dustyRose mt-1 transition-colors"
-          title="Admin photo settings (Alt+P)"
+          onClick={handleOpenAdmin}
+          className="text-[11px] text-mutedMauve/40 hover:text-dustyRose mt-1 transition-colors"
+          title="Batparss Console Access"
         >
-          ⚙
+          🔒
         </button>
       </footer>
-
-      {/* Photo Manager Modal (Only opened by admin) */}
-      <PhotoManagerModal
-        isOpen={isPhotoManagerOpen}
-        onClose={() => setIsPhotoManagerOpen(false)}
-        photos={photos}
-        onUpdatePhotoSrc={handleUpdatePhotoSrc}
-        onResetPhotos={handleResetPhotos}
-      />
     </div>
+  );
+};
+
+export const App: React.FC = () => {
+  return (
+    <LanguageProvider>
+      <MainExperience />
+    </LanguageProvider>
   );
 };
 
