@@ -2,39 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { Navigation } from './components/Navigation';
 import { Scene1Mystery } from './components/scenes/Scene1Mystery';
 import { Scene2Cake } from './components/scenes/Scene2Cake';
-import { Scene3Welcome } from './components/scenes/Scene3Welcome';
-import { Scene4Chaos } from './components/scenes/Scene4Chaos';
-import { Scene5Sreemangal } from './components/scenes/Scene5Sreemangal';
-import { Scene6Spotlight } from './components/scenes/Scene6Spotlight';
-import { Scene7MemoryWall } from './components/scenes/Scene7MemoryWall';
-import { Scene8Letter } from './components/scenes/Scene8Letter';
-import { Scene9Celebration } from './components/scenes/Scene9Celebration';
-import { Scene10Signature } from './components/scenes/Scene10Signature';
+import { StoryJourney } from './components/StoryJourney';
 import { PhotoManagerModal } from './components/PhotoManagerModal';
 import { DEFAULT_PHOTOS, PhotoMemory } from './config/content';
 import { audioManager } from './utils/audio';
 
+export type ExperiencePhase = 'mystery' | 'cake' | 'journey';
+
 export const App: React.FC = () => {
-  // Staged Scene Progress State
-  const [currentScene, setCurrentScene] = useState<number>(() => {
+  // Experience Phase: 'mystery' -> 'cake' -> 'journey'
+  const [phase, setPhase] = useState<ExperiencePhase>(() => {
     try {
-      const saved = localStorage.getItem('mahima_current_scene');
-      return saved ? parseInt(saved, 10) : 1;
+      const saved = localStorage.getItem('mahima_experience_phase');
+      return (saved as ExperiencePhase) || 'mystery';
     } catch {
-      return 1;
+      return 'mystery';
     }
   });
 
-  const [unlockedScenes, setUnlockedScenes] = useState<number[]>(() => {
-    try {
-      const saved = localStorage.getItem('mahima_unlocked_scenes');
-      return saved ? JSON.parse(saved) : [1];
-    } catch {
-      return [1];
-    }
-  });
-
-  // Photos State
+  // Photos State with local storage persistence
   const [photos, setPhotos] = useState<PhotoMemory[]>(() => {
     try {
       const saved = localStorage.getItem('mahima_custom_photos');
@@ -44,20 +30,36 @@ export const App: React.FC = () => {
     }
   });
 
-  // Audio & Modal States
+  // Audio & Admin States
   const [isPlayingMusic, setIsPlayingMusic] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [isPhotoManagerOpen, setIsPhotoManagerOpen] = useState<boolean>(false);
 
-  // Sync scene state to localStorage
+  // Admin Mode check (via ?admin=true query parameter or Alt+P shortcut)
+  const [isAdmin, setIsAdmin] = useState<boolean>(() => {
+    return typeof window !== 'undefined' && window.location.search.includes('admin=true');
+  });
+
+  // Keyboard shortcut Alt+P to toggle admin photo manager
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.altKey && (e.key === 'p' || e.key === 'P')) {
+        setIsAdmin(true);
+        setIsPhotoManagerOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Sync phase to localStorage
   useEffect(() => {
     try {
-      localStorage.setItem('mahima_current_scene', currentScene.toString());
-      localStorage.setItem('mahima_unlocked_scenes', JSON.stringify(unlockedScenes));
+      localStorage.setItem('mahima_experience_phase', phase);
     } catch (e) {
       console.warn('Storage error', e);
     }
-  }, [currentScene, unlockedScenes]);
+  }, [phase]);
 
   // Sync photos to localStorage
   useEffect(() => {
@@ -68,27 +70,22 @@ export const App: React.FC = () => {
     }
   }, [photos]);
 
-  // Unlock and advance scene
-  const advanceToScene = (nextSceneId: number) => {
-    setUnlockedScenes((prev) => (prev.includes(nextSceneId) ? prev : [...prev, nextSceneId]));
-    setCurrentScene(nextSceneId);
+  const handleStartCake = () => {
+    setPhase('cake');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSelectScene = (sceneId: number) => {
-    if (unlockedScenes.includes(sceneId)) {
-      audioManager.playTransition();
-      setCurrentScene(sceneId);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+  const handleStartJourney = () => {
+    setPhase('journey');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleReplay = () => {
-    setCurrentScene(1);
+    setPhase('mystery');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Music & Mute controls
+  // Music controls
   const handleToggleMusic = async () => {
     if (isPlayingMusic) {
       audioManager.pause();
@@ -107,7 +104,6 @@ export const App: React.FC = () => {
     }
   };
 
-  // Photo updates
   const handleUpdatePhotoSrc = (id: string, newSrc: string) => {
     setPhotos((prev) =>
       prev.map((p) => (p.id === id ? { ...p, src: newSrc } : p))
@@ -123,69 +119,51 @@ export const App: React.FC = () => {
     }
   };
 
-  // Group and portrait photo lookup
-  const groupPhoto = photos.find((p) => p.category === 'batparss')?.src || DEFAULT_PHOTOS[2].src;
-  const candidPhoto = photos.find((p) => p.src.includes('candid'))?.src || DEFAULT_PHOTOS[5].src;
-  const mahimaPortrait = photos.find((p) => p.category === 'spotlight')?.src || DEFAULT_PHOTOS[3].src;
-
   return (
     <div className="min-h-screen bg-ivory text-warmCharcoal flex flex-col font-sans selection:bg-dustyRose selection:text-white">
-      {/* Top Floating Story Navigation */}
+      {/* Minimal Floating Navigation (No chapter buttons or step counters) */}
       <Navigation
-        currentScene={currentScene}
-        unlockedScenes={unlockedScenes}
-        onSelectScene={handleSelectScene}
         isPlayingMusic={isPlayingMusic}
         onToggleMusic={handleToggleMusic}
         isMuted={isMuted}
         onToggleMute={handleToggleMute}
+        isAdmin={isAdmin}
         onOpenPhotoManager={() => setIsPhotoManagerOpen(true)}
       />
 
-      {/* Main Staged Scene Presentation */}
-      <main className="flex-1 pt-12">
-        {currentScene === 1 && (
-          <Scene1Mystery onOpenSurprise={() => advanceToScene(2)} />
+      {/* Main Experience Layout */}
+      <main className="flex-1 pt-14">
+        {phase === 'mystery' && (
+          <Scene1Mystery onOpenSurprise={handleStartCake} />
         )}
 
-        {currentScene === 2 && (
-          <Scene2Cake onContinue={() => advanceToScene(3)} />
+        {phase === 'cake' && (
+          <Scene2Cake onContinue={handleStartJourney} />
         )}
 
-        {currentScene === 3 && (
-          <Scene3Welcome onContinue={() => advanceToScene(4)} groupPhotoSrc={groupPhoto} />
-        )}
-
-        {currentScene === 4 && (
-          <Scene4Chaos onContinue={() => advanceToScene(5)} candidPhotoSrc={candidPhoto} />
-        )}
-
-        {currentScene === 5 && (
-          <Scene5Sreemangal photos={photos} onContinue={() => advanceToScene(6)} />
-        )}
-
-        {currentScene === 6 && (
-          <Scene6Spotlight onContinue={() => advanceToScene(7)} portraitSrc={mahimaPortrait} />
-        )}
-
-        {currentScene === 7 && (
-          <Scene7MemoryWall photos={photos} onContinue={() => advanceToScene(8)} />
-        )}
-
-        {currentScene === 8 && (
-          <Scene8Letter onContinue={() => advanceToScene(9)} />
-        )}
-
-        {currentScene === 9 && (
-          <Scene9Celebration onContinue={() => advanceToScene(10)} />
-        )}
-
-        {currentScene === 10 && (
-          <Scene10Signature onReplay={handleReplay} onJumpToScene={handleSelectScene} />
+        {phase === 'journey' && (
+          <StoryJourney photos={photos} onReplay={handleReplay} />
         )}
       </main>
 
-      {/* Photo Manager Modal */}
+      {/* Discreet Footer */}
+      <footer className="py-8 border-t border-champagne/40 bg-ivory/60 text-center text-xs text-mutedMauve">
+        <p className="font-serif">
+          Crafted with memories by Batparss for Mahima • 2026
+        </p>
+        <button
+          onClick={() => {
+            setIsAdmin(true);
+            setIsPhotoManagerOpen(true);
+          }}
+          className="text-[10px] text-mutedMauve/40 hover:text-dustyRose mt-1 transition-colors"
+          title="Admin photo settings (Alt+P)"
+        >
+          ⚙
+        </button>
+      </footer>
+
+      {/* Photo Manager Modal (Only opened by admin) */}
       <PhotoManagerModal
         isOpen={isPhotoManagerOpen}
         onClose={() => setIsPhotoManagerOpen(false)}
