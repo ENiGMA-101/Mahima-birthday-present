@@ -1,0 +1,8 @@
+{
+  "name": "Mahima × Batparss — Birthday Experience",
+  "description": "A handcrafted, interactive birthday experience for Mahima, designed with love and memories by Batparss.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
