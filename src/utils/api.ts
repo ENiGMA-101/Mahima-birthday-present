@@ -88,3 +88,27 @@ export async function fetchSiteSettings(): Promise<SiteSettingsMap> {
     return {};
   }
 }
+
+export interface SurpriseItem {
+  id: number;
+  type: 'box' | 'balloon';
+  title_bn: string;
+  title_en: string;
+  message_bn: string;
+  message_en: string;
+  color: string;
+  display_order: number;
+  is_published: boolean;
+}
+
+// Fetch published surprises
+export async function fetchSurprises(): Promise<SurpriseItem[]> {
+  try {
+    const res = await fetch('/api/surprises');
+    if (!res.ok) throw new Error('Failed to fetch surprises');
+    return await res.json();
+  } catch (err) {
+    console.warn('API error fetching surprises', err);
+    return [];
+  }
+}

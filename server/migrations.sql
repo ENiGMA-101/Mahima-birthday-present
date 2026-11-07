@@ -51,8 +51,23 @@ CREATE TABLE IF NOT EXISTS site_settings (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS surprise_messages (
+  id SERIAL PRIMARY KEY,
+  type VARCHAR(20) NOT NULL DEFAULT 'box',
+  title_bn TEXT NOT NULL,
+  title_en TEXT NOT NULL,
+  message_bn TEXT NOT NULL,
+  message_en TEXT NOT NULL,
+  color VARCHAR(50) DEFAULT '#FF5E97',
+  display_order INTEGER DEFAULT 0,
+  is_published BOOLEAN DEFAULT true,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Indexes for optimal querying
 CREATE INDEX IF NOT EXISTS idx_memories_category ON memories(category);
 CREATE INDEX IF NOT EXISTS idx_memories_is_published ON memories(is_published);
 CREATE INDEX IF NOT EXISTS idx_memories_display_order ON memories(display_order);
 CREATE INDEX IF NOT EXISTS idx_story_chapters_display_order ON story_chapters(display_order);
+CREATE INDEX IF NOT EXISTS idx_surprise_messages_display_order ON surprise_messages(display_order);

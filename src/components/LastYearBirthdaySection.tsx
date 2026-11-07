@@ -56,16 +56,16 @@ export const LastYearBirthdaySection: React.FC = () => {
   }
 
   return (
-    <section className="relative py-28 px-4 overflow-hidden bg-gradient-to-b from-ivory via-champagne/30 to-ivory">
+    <section className="relative py-28 px-4 overflow-hidden bg-gradient-to-b from-white via-pinkPastel/15 to-white">
       {/* Background ambient accents */}
-      <div className="absolute top-1/2 left-0 w-80 h-80 bg-antiqueGold/10 rounded-full blur-3xl -translate-y-1/2 pointer-events-none" />
-      <div className="absolute top-1/3 right-0 w-80 h-80 bg-dustyRose/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-80 h-80 bg-pinkPastel/20 rounded-full blur-3xl -translate-y-1/2 pointer-events-none" />
+      <div className="absolute top-1/3 right-0 w-80 h-80 bg-butterYellowLight/35 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-champagne/50 border border-champagne text-deepPlum text-xs font-serif uppercase tracking-widest mb-4 shadow-2xs">
-            <Cake className="w-3.5 h-3.5 text-antiqueGold" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-pinkPastel text-brightPink text-xs font-serif uppercase tracking-widest mb-4 shadow-sm">
+            <Cake className="w-3.5 h-3.5 text-coral" />
             <span>
               {lang === 'bn' ? 'গত জন্মদিনের স্মৃতিমালা' : "Last Year's Birthday Memories"}
             </span>
@@ -75,10 +75,10 @@ export const LastYearBirthdaySection: React.FC = () => {
             {lang === 'bn' ? 'ফিরে দেখা ফেলে আসা দিন' : 'Looking Back at Yesterday'}
           </h2>
 
-          <p className="mt-4 font-serif italic text-lg sm:text-xl text-dustyRose">
+          <p className="mt-4 font-serif italic text-lg sm:text-xl text-coral">
             {lang === 'bn'
-              ? '“বছর ঘুরে জন্মদিন আবার ফিরে এলো, কিন্তু আমাদের বন্ধুত্ব রয়ে গেছে ঠিক আগের মতোই অটুট।”'
-              : '"Another year has passed, but our friendship remains as bright and joyful as ever."'}
+              ? '“গত বছরের সেই সুন্দর দিনটার কথা মনে আছে?”'
+              : '"Remember that beautiful day last year?"'}
           </p>
 
           <p className="mt-3 text-sm text-warmCharcoal/80 leading-relaxed max-w-xl mx-auto">

@@ -223,6 +223,123 @@ class AudioManager {
       }, idx * 80);
     });
   }
+
+  // Cheerful Happy Birthday Melody synthesizer (G4 G4 A4 G4 C5 B4, G4 G4 A4 G4 D5 C5...)
+  public playHappyBirthdayTune() {
+    if (this.isMuted) return;
+    this.initContext();
+    const notes: [number, number][] = [
+      [392.00, 0.35], // G4
+      [392.00, 0.35], // G4
+      [440.00, 0.6],  // A4
+      [392.00, 0.6],  // G4
+      [523.25, 0.6],  // C5
+      [493.88, 1.0],  // B4
+      [392.00, 0.35], // G4
+      [392.00, 0.35], // G4
+      [440.00, 0.6],  // A4
+      [392.00, 0.6],  // G4
+      [587.33, 0.6],  // D5
+      [523.25, 1.2],  // C5
+    ];
+
+    let delay = 0;
+    notes.forEach(([freq, dur]) => {
+      setTimeout(() => {
+        this.playChime(freq, dur * 0.9, 0.18);
+      }, delay);
+      delay += dur * 600;
+    });
+
+    // Also trigger cheer
+    setTimeout(() => {
+      this.playApplauseAndCheer();
+    }, 1200);
+  }
+
+  // Realistic synthesized celebration cheer and applause
+  public playApplauseAndCheer() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.audioCtx) return;
+
+    try {
+      const now = this.audioCtx.currentTime;
+      // Synthesize rhythmic clapping burst
+      for (let i = 0; i < 18; i++) {
+        setTimeout(() => {
+          if (!this.audioCtx || this.isMuted) return;
+          const osc = this.audioCtx.createOscillator();
+          const gain = this.audioCtx.createGain();
+          const filter = this.audioCtx.createBiquadFilter();
+
+          filter.type = 'bandpass';
+          filter.frequency.setValueAtTime(800 + Math.random() * 600, this.audioCtx.currentTime);
+          filter.Q.setValueAtTime(3, this.audioCtx.currentTime);
+
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(300 + Math.random() * 200, this.audioCtx.currentTime);
+
+          gain.gain.setValueAtTime(0.12, this.audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, this.audioCtx.currentTime + 0.08);
+
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.audioCtx.destination);
+
+          osc.start();
+          osc.stop(this.audioCtx.currentTime + 0.09);
+        }, i * 90 + Math.random() * 30);
+      }
+    } catch (e) {
+      console.warn('Cheer audio error', e);
+    }
+  }
+
+  // Balloon popping sound effect
+  public playBalloonPop() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.audioCtx) return;
+
+    try {
+      const now = this.audioCtx.currentTime;
+      const bufferSize = this.audioCtx.sampleRate * 0.12;
+      const buffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.2));
+      }
+
+      const noise = this.audioCtx.createBufferSource();
+      noise.buffer = buffer;
+
+      const gain = this.audioCtx.createGain();
+      gain.gain.setValueAtTime(0.25, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+
+      noise.connect(gain);
+      gain.connect(this.audioCtx.destination);
+
+      noise.start(now);
+      noise.stop(now + 0.12);
+
+      // Sweet sparkle after pop
+      setTimeout(() => {
+        this.playChime(880, 0.4, 0.1);
+      }, 60);
+    } catch (e) {
+      console.warn('Balloon pop error', e);
+    }
+  }
+
+  // Surprise gift box opening sound
+  public playGiftOpen() {
+    if (this.isMuted) return;
+    this.playChime(440, 0.3, 0.12);
+    setTimeout(() => this.playChime(660, 0.35, 0.14), 120);
+    setTimeout(() => this.playChime(880, 0.5, 0.16), 240);
+  }
 }
 
 export const audioManager = new AudioManager();

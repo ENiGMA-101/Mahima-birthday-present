@@ -5,10 +5,12 @@ import path from 'path';
 import {
   INITIAL_MEMORIES,
   INITIAL_CHAPTERS,
+  INITIAL_SURPRISES,
   INITIAL_SITE_CONTENT,
   INITIAL_SETTINGS,
   MemoryRecord,
   StoryChapterRecord,
+  SurpriseRecord,
   SiteContentRecord,
 } from './defaultData';
 
@@ -27,10 +29,12 @@ class DatabaseService {
   private memUsers: AdminUser[] = [];
   private memMemories: MemoryRecord[] = [...INITIAL_MEMORIES];
   private memChapters: StoryChapterRecord[] = [...INITIAL_CHAPTERS];
+  private memSurprises: SurpriseRecord[] = [...INITIAL_SURPRISES];
   private memContent: Map<string, SiteContentRecord> = new Map();
   private memSettings: Map<string, string> = new Map();
   private nextMemoryId: number = 10;
   private nextChapterId: number = 10;
+  private nextSurpriseId: number = 10;
 
   constructor() {
     // Populate in-memory site content & settings
@@ -344,6 +348,69 @@ class DatabaseService {
     const lenBefore = this.memChapters.length;
     this.memChapters = this.memChapters.filter((c) => c.id !== id);
     return this.memChapters.length < lenBefore;
+  }
+
+  // --- Surprise Messages operations ---
+  public async getSurprises(publishedOnly = true): Promise<SurpriseRecord[]> {
+    if (this.isConnectedToNeon && this.pool) {
+      let query = 'SELECT * FROM surprise_messages';
+      if (publishedOnly) query += ' WHERE is_published = true';
+      query += ' ORDER BY display_order ASC, id ASC';
+      const res = await this.pool.query(query);
+      return res.rows;
+    }
+    let res = [...this.memSurprises];
+    if (publishedOnly) res = res.filter((s) => s.is_published);
+    return res.sort((a, b) => a.display_order - b.display_order);
+  }
+
+  public async createSurprise(data: Omit<SurpriseRecord, 'id'>): Promise<SurpriseRecord> {
+    if (this.isConnectedToNeon && this.pool) {
+      const res = await this.pool.query(
+        `INSERT INTO surprise_messages (type, title_bn, title_en, message_bn, message_en, color, display_order, is_published)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
+        [data.type || 'box', data.title_bn, data.title_en, data.message_bn, data.message_en, data.color || '#FF5E97', data.display_order || 0, data.is_published ?? true]
+      );
+      return res.rows[0];
+    }
+    const record: SurpriseRecord = {
+      id: this.nextSurpriseId++,
+      ...data,
+    };
+    this.memSurprises.push(record);
+    return record;
+  }
+
+  public async updateSurprise(id: number, data: Partial<SurpriseRecord>): Promise<SurpriseRecord | null> {
+    if (this.isConnectedToNeon && this.pool) {
+      const fields: string[] = [];
+      const values: (string | number | boolean)[] = [];
+      let idx = 1;
+      Object.entries(data).forEach(([key, val]) => {
+        if (key !== 'id' && key !== 'created_at') {
+          fields.push(`${key} = $${idx++}`);
+          values.push(val as string | number | boolean);
+        }
+      });
+      fields.push(`updated_at = CURRENT_TIMESTAMP`);
+      values.push(id);
+      const res = await this.pool.query(`UPDATE surprise_messages SET ${fields.join(', ')} WHERE id = $${idx} RETURNING *`, values);
+      return res.rows[0] || null;
+    }
+    const idx = this.memSurprises.findIndex((s) => s.id === id);
+    if (idx === -1) return null;
+    this.memSurprises[idx] = { ...this.memSurprises[idx], ...data };
+    return this.memSurprises[idx];
+  }
+
+  public async deleteSurprise(id: number): Promise<boolean> {
+    if (this.isConnectedToNeon && this.pool) {
+      const res = await this.pool.query('DELETE FROM surprise_messages WHERE id = $1', [id]);
+      return (res.rowCount ?? 0) > 0;
+    }
+    const lenBefore = this.memSurprises.length;
+    this.memSurprises = this.memSurprises.filter((s) => s.id !== id);
+    return this.memSurprises.length < lenBefore;
   }
 
   // --- Site Content operations ---

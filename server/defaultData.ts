@@ -25,11 +25,92 @@ export interface StoryChapterRecord {
   is_published: boolean;
 }
 
+export interface SurpriseRecord {
+  id: number;
+  type: 'box' | 'balloon';
+  title_bn: string;
+  title_en: string;
+  message_bn: string;
+  message_en: string;
+  color: string;
+  display_order: number;
+  is_published: boolean;
+}
+
 export interface SiteContentRecord {
   content_key: string;
   value_bn: string;
   value_en: string;
 }
+
+export const INITIAL_SURPRISES: SurpriseRecord[] = [
+  {
+    id: 1,
+    type: 'box',
+    title_bn: 'এক টুকরো আন্তরিক শুভেচ্ছা',
+    title_en: 'A Heartfelt Friendship Wish',
+    message_bn: 'শ্রীমঙ্গলের সবুজে ঘেরা সেই চা বাগানের মতো তোমার জীবন সবসময় সজীব আর আনন্দময় থাকুক। শুভ জন্মদিন মহিমা!',
+    message_en: 'May your days stay as fresh, green, and vibrant as the rolling hills of Sreemangal. Happy Birthday, Mahima!',
+    color: '#FF5E97',
+    display_order: 1,
+    is_published: true,
+  },
+  {
+    id: 2,
+    type: 'box',
+    title_bn: 'বাটপাড়সের গোপন বার্তা',
+    title_en: 'The Batparss Secret Note',
+    message_bn: 'ট্যুর শেষ হয়ে গেলেও আমাদের অবিরাম আড্ডা আর হাসাহাসি কখনই থামবে না। তুমি আমাদের গ্রুপের মধ্যমণি!',
+    message_en: 'Trips may come and go, but the laughter of Batparss is lifelong. You remain the glowing spark of our circle!',
+    color: '#70D6FF',
+    display_order: 2,
+    is_published: true,
+  },
+  {
+    id: 3,
+    type: 'box',
+    title_bn: 'আগামীর জন্য প্রার্থনা',
+    title_en: 'Wishes for the Days Ahead',
+    message_bn: 'তোমার সামনের প্রতিটি দিন ভরে উঠুক সাফল্য, সুস্বাস্থ্য আর হাজারো সুন্দর স্মৃতিতে।',
+    message_en: 'May every step forward bring you endless happiness, radiant health, and beautiful new memories.',
+    color: '#FFD670',
+    display_order: 3,
+    is_published: true,
+  },
+  {
+    id: 4,
+    type: 'balloon',
+    title_bn: 'বেলুন উইশ ১',
+    title_en: 'Balloon Wish 1',
+    message_bn: 'মহিমার মিষ্টি হাসি সবসময় অটুট থাকুক!',
+    message_en: 'May your joyful smile shine bright forever!',
+    color: '#FF5E97',
+    display_order: 4,
+    is_published: true,
+  },
+  {
+    id: 5,
+    type: 'balloon',
+    title_bn: 'বেলুন উইশ ২',
+    title_en: 'Balloon Wish 2',
+    message_bn: 'পরের ট্যুর সিলেটে নাকি কক্সবাজারে?',
+    message_en: 'Where is our next road trip together?',
+    color: '#70D6FF',
+    display_order: 5,
+    is_published: true,
+  },
+  {
+    id: 6,
+    type: 'balloon',
+    title_bn: 'বেলুন উইশ ৩',
+    title_en: 'Balloon Wish 3',
+    message_bn: 'বাটপাড়স গ্যাংয়ের পক্ষ থেকে অফুরন্ত ভালোবাসা!',
+    message_en: 'Boundless love from the entire Batparss gang!',
+    color: '#BDB2FF',
+    display_order: 6,
+    is_published: true,
+  },
+];
 
 export const INITIAL_MEMORIES: MemoryRecord[] = [
   {

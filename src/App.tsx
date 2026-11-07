@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navigation } from './components/Navigation';
-import { Scene1Mystery } from './components/scenes/Scene1Mystery';
-import { Scene2Cake } from './components/scenes/Scene2Cake';
+import { PartyOpeningScene } from './components/scenes/PartyOpeningScene';
 import { StoryJourney } from './components/StoryJourney';
 import { AdminLogin } from './components/admin/AdminLogin';
 import { AdminDashboard } from './components/admin/AdminDashboard';
@@ -9,18 +8,18 @@ import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { DEFAULT_PHOTOS, PhotoMemory } from './config/content';
 import { audioManager } from './utils/audio';
 
-export type ExperiencePhase = 'mystery' | 'cake' | 'journey';
+export type ExperiencePhase = 'party' | 'journey';
 
 const MainExperience: React.FC = () => {
   const { lang } = useLanguage();
 
-  // Experience Phase: 'mystery' -> 'cake' -> 'journey'
+  // Experience Phase: 'party' -> 'journey'
   const [phase, setPhase] = useState<ExperiencePhase>(() => {
     try {
       const saved = localStorage.getItem('mahima_experience_phase');
-      return (saved as ExperiencePhase) || 'mystery';
+      return saved === 'journey' ? 'journey' : 'party';
     } catch {
-      return 'mystery';
+      return 'party';
     }
   });
 
@@ -78,18 +77,13 @@ const MainExperience: React.FC = () => {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  const handleStartCake = () => {
-    setPhase('cake');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const handleStartJourney = () => {
     setPhase('journey');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleReplay = () => {
-    setPhase('mystery');
+    setPhase('party');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -169,15 +163,9 @@ const MainExperience: React.FC = () => {
 
       {/* Main Experience Layout */}
       <main className="flex-1 pt-14">
-        {phase === 'mystery' && (
-          <Scene1Mystery onOpenSurprise={handleStartCake} />
-        )}
-
-        {phase === 'cake' && (
-          <Scene2Cake onContinue={handleStartJourney} />
-        )}
-
-        {phase === 'journey' && (
+        {phase === 'party' ? (
+          <PartyOpeningScene onBeginJourney={handleStartJourney} />
+        ) : (
           <StoryJourney photos={photos} onReplay={handleReplay} />
         )}
       </main>

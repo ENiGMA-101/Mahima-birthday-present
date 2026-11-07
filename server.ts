@@ -116,6 +116,16 @@ app.get('/api/settings', async (req: Request, res: Response) => {
   }
 });
 
+// Get published surprises (gift boxes & balloons)
+app.get('/api/surprises', async (req: Request, res: Response) => {
+  try {
+    const surprises = await dbService.getSurprises(true);
+    res.json(surprises);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to retrieve surprises' });
+  }
+});
+
 // ==========================================
 // AUTHENTICATION API ENDPOINTS
 // ==========================================
@@ -320,6 +330,61 @@ app.delete('/api/admin/story-chapters/:id', requireAuth, async (req: AuthRequest
     res.json({ message: 'Chapter deleted successfully' });
   } catch (err) {
     res.status(500).json({ error: 'Failed to delete chapter' });
+  }
+});
+
+// Admin Surprises CRUD
+app.get('/api/admin/surprises', requireAuth, async (req: AuthRequest, res: Response) => {
+  try {
+    const surprises = await dbService.getSurprises(false);
+    res.json(surprises);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to retrieve admin surprises' });
+  }
+});
+
+app.post('/api/admin/surprises', requireAuth, async (req: AuthRequest, res: Response) => {
+  try {
+    const { type, title_bn, title_en, message_bn, message_en, color, display_order, is_published } = req.body;
+    const created = await dbService.createSurprise({
+      type: type || 'box',
+      title_bn: title_bn || '',
+      title_en: title_en || '',
+      message_bn: message_bn || '',
+      message_en: message_en || '',
+      color: color || '#FF5E97',
+      display_order: parseInt(display_order, 10) || 0,
+      is_published: is_published !== false,
+    });
+    res.status(201).json(created);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to create surprise' });
+  }
+});
+
+app.put('/api/admin/surprises/:id', requireAuth, async (req: AuthRequest, res: Response) => {
+  try {
+    const id = parseInt(req.params.id as string, 10);
+    const updated = await dbService.updateSurprise(id, req.body);
+    if (!updated) {
+      return res.status(404).json({ error: 'Surprise record not found' });
+    }
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update surprise' });
+  }
+});
+
+app.delete('/api/admin/surprises/:id', requireAuth, async (req: AuthRequest, res: Response) => {
+  try {
+    const id = parseInt(req.params.id as string, 10);
+    const deleted = await dbService.deleteSurprise(id);
+    if (!deleted) {
+      return res.status(404).json({ error: 'Surprise record not found' });
+    }
+    res.json({ message: 'Surprise deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete surprise' });
   }
 });
 

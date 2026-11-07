@@ -90,14 +90,14 @@ export const MovingPhotoGallery: React.FC<MovingPhotoGalleryProps> = ({ memories
       {/* Section Header */}
       <div className="max-w-6xl mx-auto px-4 mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-champagne/40 border border-champagne text-deepPlum text-xs font-serif uppercase tracking-widest mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-antiqueGold" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-pinkPastel text-brightPink text-xs font-serif uppercase tracking-widest mb-3 shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 text-butterYellow" />
             <span>{lang === 'bn' ? 'চলমান স্মৃতির অ্যালবাম' : 'Continuous Photo Reel'}</span>
           </div>
           <h2 className="font-serif text-3xl sm:text-4xl text-deepPlum font-bold tracking-tight">
             {lang === 'bn' ? 'আমাদের অবিস্মরণীয় মুহূর্তগুলো' : 'Echoes of Shared Adventures'}
           </h2>
-          <p className="font-serif italic text-sm text-dustyRose mt-1">
+          <p className="font-serif italic text-sm text-coral mt-1">
             {lang === 'bn'
               ? 'ডান থেকে বামে চলমান আমাদের প্রতিটি হাসিমুখের গল্প'
               : 'Flowing right-to-left continuously • Hover or tap to pause'}

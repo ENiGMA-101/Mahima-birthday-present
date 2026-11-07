@@ -6,33 +6,43 @@ An interactive, 3D digital gift and editorial birthday journey created for **Mah
 
 ## 🌟 Key Features
 
-### 1. Minimal Interaction Budget (~4 Intuitive Actions)
-- **Action 1: Unseal the Surprise** — Interactive real-time 3D Three.js gift box with realistic lid rotation and soft lighting.
-- **Action 2: Extinguish Candles** — Single-action 3D porcelain pedestal tiered cake with dynamic point lights, glowing flame meshes, and rising smoke particle dissipation.
-- **Action 3: Open Keepsake Letter** — Interactive wax seal envelope revealing Batparss's heartfelt birthday message.
-- **Action 4: Replay Experience** — Seamless restart button at the grand finale toast.
+### 1. 3D Animated Birthday Party Universe (Three.js)
+- **3D Animated Girl (Mahima)**: A charming 3D stylized character dressed in a layered birthday party gown with party hat, blinking eyes, subtle breathing motion, smiling expressions, and head movements.
+- **Interactive Cake Blowout**:
+  1. *Preparation*: Leans forward and takes a deep breath.
+  2. *Airflow & Wind*: Rushing 3D particle wind stream shoots from her mouth toward the candle wicks.
+  3. *Flame Extinguish & Smoke*: Dynamic flames shrink and extinguish as wispy smoke particles billow upward.
+  4. *Celebration Explosion*: Confetti bursts across the scene, colorful balloons float skyward, party lights flash, and flanking 3D Batparss friends jump, wave, and cheer!
+- **Grand Birthday Reveal**: Celebratory banner with sound effects (applause, arpeggio melodies, synthesized Web Audio chimes).
 
-### 2. Strict Bilingual Language System (বাংলা | English)
-- **Authentic Bengali Script (`বাংলা হরফ`)**: All Bengali text is written in proper, natural Bengali script — strictly **zero** Romanized Bengali ("Banglish").
-- **Real-Time Toggle**: Unobtrusive toggle in the header (**বাংলা | English**) with zero-reload dynamic rendering and `localStorage` persistence.
+### 2. "Little Surprises" Interactive Playground
+- **3D Interactive Gift Boxes**: Click to unwrap real-time 3D gift boxes with animated lifting lids, dynamic ribbon rotations, and glowing surprise friendship keepsakes.
+- **Floating Friendship Balloons**: Colorful bouncing balloons that pop with authentic Web Audio sound synthesis and confetti to reveal heartfelt secret notes from Batparss friends.
 
-### 3. Continuous Moving Photo Gallery
-- Seamless right-to-left marquee photo reel with dual parallax rows.
+### 3. Strict Bilingual Language System (বাংলা | English)
+- **Authentic Bengali Script (`বাংলা হরফ`)**: All Bengali text is written in natural, authentic Bengali script — strictly **zero** Romanized Bengali ("Banglish").
+- **Real-Time Toggle**: Unobtrusive toggle in the floating header (**বাংলা | English**) with instant zero-reload dynamic rendering and `localStorage` persistence.
+
+### 4. Continuous Moving Photo Gallery
+- Seamless right-to-left marquee photo reel with dual parallax rows displaying genuine personal memories and Sreemangal trip captures.
 - Interactive controls: Pause on hover/click, Resume, Previous, Next.
 - High-resolution modal lightbox with full metadata (date, location, bilingual captions).
 
-### 4. Dedicated Last-Year's Birthday Memory Section
+### 5. Dedicated Last-Year's Birthday Memory Section
 - Dedicated keepsake showcase looking back at Mahima's previous birthday celebrations with Batparss.
 - Fullscreen modal viewer, location stamps, and friendship notes.
 
-### 5. Protected Admin Dashboard (`/admin` or `#admin`)
-- **Real JWT Authentication**: Secure password hashing with bcrypt, session verification, and cookie storage.
-- **Live Statistics Overview**: Total memories, published vs. drafts, story chapters, and active database status.
+### 6. Keepsake Letter & Wax Seal Reveal
+- Interactive 3D wax seal envelope unfolding into an emotional birthday letter from Batparss with a heartfelt toast and replay option.
+
+### 7. Protected Admin Dashboard (`/admin` or `#admin`)
+- **Real JWT Authentication**: Secure password hashing with bcrypt, session verification, and token storage.
+- **Little Surprises Manager**: Add, edit, or delete interactive gift boxes and balloons with custom reveal notes.
 - **Photo Memories Manager**: Add, edit, or delete photos with local file uploads via Multer (`/api/admin/uploads`) or external URLs.
 - **Story Chapters & Letter Editor**: Full editing suite for bilingual greetings, letter paragraphs, and narrative arcs.
 - **Appearance & Settings**: Custom scroll duration and section visibility toggles.
 
-### 6. Neon Serverless PostgreSQL & Resilient In-Memory Fallback
+### 8. Neon Serverless PostgreSQL & Resilient In-Memory Fallback
 - Direct connection via `@neondatabase/serverless`.
 - Auto-executing SQL migrations on boot (`server/migrations.sql`).
 - Graceful in-memory persistent fallback if `DATABASE_URL` is omitted, guaranteeing zero startup crashes.
